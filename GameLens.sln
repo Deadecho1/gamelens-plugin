@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLens", "GameLens.csproj", "{E178E750-D097-4DC1-B554-7F2E4234E6EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E178E750-D097-4DC1-B554-7F2E4234E6EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E178E750-D097-4DC1-B554-7F2E4234E6EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E178E750-D097-4DC1-B554-7F2E4234E6EA}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{E178E750-D097-4DC1-B554-7F2E4234E6EA}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{E178E750-D097-4DC1-B554-7F2E4234E6EA}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{E178E750-D097-4DC1-B554-7F2E4234E6EA}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal
