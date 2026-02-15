@@ -1,22 +1,22 @@
 extends Node
 class_name GameLensApi
 
-var _core: Node
+var _core
 
 func _ready():
-    # Spawn C# core once
-    _core = preload("res://addons/gamelens/Runtime/AnalyticsAutoload.cs").new()
-    add_child(_core)
+	# Spawn C# core once
+	_core = preload("res://addons/gamelens/Runtime/AnalyticsAutoload.cs").new()
+	add_child(_core)
 
 # Public API 
 func enable() -> void:
-    _core.Enable()
+	_core.Enable()
 
 func disable() -> void:
-    _core.Disable()
+	_core.Disable()
 
 func set_sensitive_scene(scene_path: String, is_sensitive: bool) -> void:
-    _core.SetSensitiveScene(scene_path, is_sensitive)
+	_core.SetSensitiveScene(scene_path, is_sensitive)
 
 func snap(reason: String, meta: Dictionary = {}) -> void:
-    _core.Snap(reason, meta)
+	_core.Snap(reason, meta)
