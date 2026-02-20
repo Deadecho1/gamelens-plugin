@@ -39,7 +39,7 @@ namespace GameLensAnalytics.Runtime
 
         private void WorkerLoop()
         {
-            foreach (var pkt in _queue.GetConsumingEnumerable())
+            foreach (CapturePacket pkt in _queue.GetConsumingEnumerable())
             {
                 try
                 {

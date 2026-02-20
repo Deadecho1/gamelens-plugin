@@ -15,9 +15,10 @@ namespace GameLensAnalytics.Runtime
         Manual,
     }
     
+    
     /// <summary>
-    /// GameLens main runtime entry point (autoload).
-    /// Owns config + state, exposes a small public API, and coordinates capture scheduling.
+    /// GameLens main runtime entry point. This singleton gets loaded immediately by the GameLensApi autoload on game start.
+    /// Owns config + state, exposes a small public API, and coordinates capture workers.
     /// </summary>
     public partial class GameLensOrchestrator : Node
     {
@@ -40,6 +41,14 @@ namespace GameLensAnalytics.Runtime
         private GameLensCapturer _capturer;
         private LocalCaptureStore _store;
         private UploadQueueWorker _uploader;
+
+        // -------------------------
+        // Networking
+        // -------------------------
+        private BackendNetworking _net;
+
+        public string SessionId => _net?.SessionId;
+        public bool BackendReady => _net?.BackendReady ?? false; // flag for upload worker to know when it can start uploading (after session is created)
 
         // -------------------------
         // Sub viewport related
@@ -80,7 +89,8 @@ namespace GameLensAnalytics.Runtime
         public override void _ExitTree()
         {
             if (Instance == this) Instance = null;
-
+            
+            _net?.QueueFree();
             _store?.Dispose();
             _uploader?.Dispose();
         }
@@ -102,29 +112,15 @@ namespace GameLensAnalytics.Runtime
             {
                 _uploader.Enqueue(imgPath, jsonPath, captureId);
             };
-        }
 
-        private void SetupCaptureViewport(int w, int h)
-        {
-            _capVp = new SubViewport
+            _net = new BackendNetworking
             {
-                Size = new Vector2I(w, h),
-                Disable3D = true,
-                TransparentBg = false,
-                RenderTargetUpdateMode = SubViewport.UpdateMode.Always
+                EndpointBase = GameLensConfig.EndpointBase,
+                GameId = GameLensConfig.GameId,
+                IsEnabledFunc = () => Enabled
             };
-
-            AddChild(_capVp);
-
-            _capRect = new TextureRect
-            {
-                Texture = GetViewport().GetTexture(),
-                StretchMode = TextureRect.StretchModeEnum.Scale,
-                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize
-            };
-
-            _capRect.SetAnchorsAndOffsetsPreset(Control.LayoutPreset.FullRect);
-            _capVp.AddChild(_capRect);
+            AddChild(_net);
+            _net.Start();
         }
 
         /// <summary>

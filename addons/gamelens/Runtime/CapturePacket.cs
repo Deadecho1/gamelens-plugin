@@ -6,6 +6,6 @@ namespace GameLensAnalytics.Runtime
         public double UtcUnixSeconds;
         public byte[] ImageBytes;
         public string ImageExt;     // ".png"
-        public string PayloadJson;  // metadata+input+reasons 
+        public string PayloadJson;  // metadata+input+reasons TODO: define format
     }
 }
